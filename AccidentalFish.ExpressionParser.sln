@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccidentalFish.ExpressionParser", "Source\AccidentalFish.ExpressionParser\AccidentalFish.ExpressionParser.csproj", "{C8A6D896-37DB-43A9-846C-21DD1F9F7BA9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccidentalFish.ExpressionParser.Linq", "Source\AccidentalFish.ExpressionParser.Linq\AccidentalFish.ExpressionParser.Linq.csproj", "{73314CF6-6B87-4BA3-B2C3-787EAA7B4F4E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{15EA755E-C874-4834-BD5A-15AEB3960E84}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccidentalFish.ExpressionParser.Tests", "Tests\AccidentalFish.ExpressionParser.Tests\AccidentalFish.ExpressionParser.Tests.csproj", "{F00F853A-4B83-4501-8AC5-386CE654E4D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccidentalFish.ExpressionParser.Linq.Tests", "Tests\AccidentalFish.ExpressionParser.Linq.Tests\AccidentalFish.ExpressionParser.Linq.Tests.csproj", "{1F57E01E-EF9F-4A8B-9000-27B09B4E9584}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8A6D896-37DB-43A9-846C-21DD1F9F7BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A6D896-37DB-43A9-846C-21DD1F9F7BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A6D896-37DB-43A9-846C-21DD1F9F7BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A6D896-37DB-43A9-846C-21DD1F9F7BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73314CF6-6B87-4BA3-B2C3-787EAA7B4F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73314CF6-6B87-4BA3-B2C3-787EAA7B4F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73314CF6-6B87-4BA3-B2C3-787EAA7B4F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73314CF6-6B87-4BA3-B2C3-787EAA7B4F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00F853A-4B83-4501-8AC5-386CE654E4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00F853A-4B83-4501-8AC5-386CE654E4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00F853A-4B83-4501-8AC5-386CE654E4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00F853A-4B83-4501-8AC5-386CE654E4D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F57E01E-EF9F-4A8B-9000-27B09B4E9584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F57E01E-EF9F-4A8B-9000-27B09B4E9584}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F57E01E-EF9F-4A8B-9000-27B09B4E9584}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F57E01E-EF9F-4A8B-9000-27B09B4E9584}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F00F853A-4B83-4501-8AC5-386CE654E4D2} = {15EA755E-C874-4834-BD5A-15AEB3960E84}
+		{1F57E01E-EF9F-4A8B-9000-27B09B4E9584} = {15EA755E-C874-4834-BD5A-15AEB3960E84}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB6A10A9-FA45-4F9B-AFF3-6FFB421BA96A}
+	EndGlobalSection
+EndGlobal

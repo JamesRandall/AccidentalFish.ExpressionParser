@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>AccidentalFish.ExpressionParser</AssemblyName>
+    <RootNamespace>AccidentalFish.ExpressionParser</RootNamespace>
+  </PropertyGroup>
+
+</Project>
