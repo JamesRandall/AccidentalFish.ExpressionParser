@@ -4,6 +4,7 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>AccidentalFish.ExpressionParser</AssemblyName>
     <RootNamespace>AccidentalFish.ExpressionParser</RootNamespace>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
