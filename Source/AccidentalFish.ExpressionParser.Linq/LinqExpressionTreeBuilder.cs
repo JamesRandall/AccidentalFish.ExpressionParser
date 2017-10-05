@@ -9,7 +9,7 @@ using AccidentalFish.ExpressionParser.Linq.Extensions;
 
 namespace AccidentalFish.ExpressionParser.Linq
 {
-    public class LinqExpressionTreeBuilder
+    public class LinqExpressionTreeBuilder : ILinqExpressionTreeBuilder
     {
         // TODO: Intention of this is to (attempt!) to build a linq expression tree
         // that can then be compiled into a lambda
@@ -18,6 +18,11 @@ namespace AccidentalFish.ExpressionParser.Linq
             Expression result = RecursivelyBuild(node, parameters);
 
             return result;
+        }
+
+        public static Expression BuildLinq(ExpressionNode node, Dictionary<string, ParameterExpression> parameters = null)
+        {
+            return new LinqExpressionTreeBuilder().Build(node, parameters);
         }
 
         private Expression RecursivelyBuild(ExpressionNode node, Dictionary<string, ParameterExpression> parameters)
