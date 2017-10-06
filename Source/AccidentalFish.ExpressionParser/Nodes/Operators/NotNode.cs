@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace AccidentalFish.ExpressionParser.Nodes.Operators
+﻿namespace AccidentalFish.ExpressionParser.Nodes.Operators
 {
     // a special operator in that it only takes a single child node (that must be an operator node)
     public class NotNode : UnaryOperatorNode

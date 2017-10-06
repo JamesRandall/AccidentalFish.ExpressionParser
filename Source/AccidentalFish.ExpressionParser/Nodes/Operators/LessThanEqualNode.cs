@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace AccidentalFish.ExpressionParser.Nodes.Operators
+﻿namespace AccidentalFish.ExpressionParser.Nodes.Operators
 {
     public class LessThanEqualNode : BinaryOperatorNode
     {

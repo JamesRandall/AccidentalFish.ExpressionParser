@@ -12,18 +12,18 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
         private static readonly Dictionary<Type, Func<Expression, Expression, Expression>> _binaryFactories =
             new Dictionary<Type, Func<Expression, Expression, Expression>>
             {
-                {typeof(AdditionOperatorNode), Expression.Add},
+                {typeof(AdditionNode), Expression.Add},
                 {typeof(ConditionalAndNode), Expression.AndAlso},
                 {typeof(ConditionalOrNode), Expression.OrElse},
-                {typeof(DivisionOperatorNode), Expression.Divide},
+                {typeof(DivisionNode), Expression.Divide},
                 {typeof(EqualNode), Expression.Equal},
                 {typeof(GreaterThanEqualNode), Expression.GreaterThanOrEqual},
                 {typeof(GreaterThanNode), Expression.GreaterThan},
                 {typeof(LessThanEqualNode), Expression.LessThan},
                 {typeof(LessThanNode), Expression.LessThan},
-                {typeof(MultiplicationOperatorNode), Expression.Multiply},
+                {typeof(MultiplicationNode), Expression.Multiply},
                 {typeof(NotEqualNode), Expression.NotEqual},
-                {typeof(SubtractionOperatorNode), Expression.Subtract},
+                {typeof(SubtractionNode), Expression.Subtract},
                 {typeof(PowerOperatorNode), (l,r) =>
                     {
                         return Expression.Power(Expression.Convert(l, typeof(double)), Expression.Convert(r, typeof(double)));
@@ -35,7 +35,7 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
             new Dictionary<Type, Func<Expression, Expression>>
             {
                 {typeof(NotNode), Expression.Not },
-                {typeof(NegateOperatorNode),Expression.Negate}
+                {typeof(NegateNode),Expression.Negate}
             };
 
         public static Expression CreateLinq(this BinaryOperatorNode operatorNode, Expression left, Expression right)

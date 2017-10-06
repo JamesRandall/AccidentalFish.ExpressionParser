@@ -18,9 +18,9 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionTreeBuilder testSubject = new ExpressionTreeBuilder();
             ExpressionNode result = testSubject.Build(rpnExpression);
 
-            Assert.IsType<AdditionOperatorNode>(result);
-            Assert.Equal(5,((IntValueNode)((AdditionOperatorNode)result).Left).Value);
-            Assert.Equal(3, ((IntValueNode)((AdditionOperatorNode)result).Right).Value);
+            Assert.IsType<AdditionNode>(result);
+            Assert.Equal(5,((IntValueNode)((AdditionNode)result).Left).Value);
+            Assert.Equal(3, ((IntValueNode)((AdditionNode)result).Right).Value);
         }
 
         [Fact]
@@ -33,9 +33,9 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionTreeBuilder testSubject = new ExpressionTreeBuilder();
             ExpressionNode result = testSubject.Build(rpnExpression);
 
-            Assert.IsType<AdditionOperatorNode>(result);
-            Assert.Equal(5, ((IntValueNode)((AdditionOperatorNode)result).Left).Value);
-            Assert.Equal("@myvar", ((VariableNode)((AdditionOperatorNode)result).Right).Name);
+            Assert.IsType<AdditionNode>(result);
+            Assert.Equal(5, ((IntValueNode)((AdditionNode)result).Left).Value);
+            Assert.Equal("@myvar", ((VariableNode)((AdditionNode)result).Right).Name);
         }
 
         [Fact]
@@ -48,8 +48,8 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionTreeBuilder testSubject = new ExpressionTreeBuilder();
             ExpressionNode result = testSubject.Build(rpnExpression);
 
-            Assert.IsType<MultiplicationOperatorNode>(result);
-            Assert.IsType<AdditionOperatorNode>(((MultiplicationOperatorNode)result).Left);
+            Assert.IsType<MultiplicationNode>(result);
+            Assert.IsType<AdditionNode>(((MultiplicationNode)result).Left);
         }
     }
 }

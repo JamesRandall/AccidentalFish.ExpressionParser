@@ -11,7 +11,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
         [Fact]
         public void TraverseSimpleTree()
         {
-            AdditionOperatorNode root = new AdditionOperatorNode(
+            AdditionNode root = new AdditionNode(
                 new IntValueNode(5),
                 new IntValueNode(10));
             ExpressionTreeVisitor testSubject = new ExpressionTreeVisitor(root);
@@ -26,19 +26,19 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
         [Fact]
         public void TraverseShallowTree()
         {
-            AdditionOperatorNode root = new AdditionOperatorNode(
-                new MultiplicationOperatorNode(new IntValueNode(5), new IntValueNode(2)), 
+            AdditionNode root = new AdditionNode(
+                new MultiplicationNode(new IntValueNode(5), new IntValueNode(2)), 
                 new IntValueNode(10));
             ExpressionTreeVisitor testSubject = new ExpressionTreeVisitor(root);
             List<ExpressionNode> result = new List<ExpressionNode>(testSubject);
 
             Assert.Equal(5, result.Count);
             Assert.True(result.Contains(root));
-            MultiplicationOperatorNode multiplicationOperatorNode = (MultiplicationOperatorNode) root.Left;
-            Assert.True(result.Contains(multiplicationOperatorNode));
+            MultiplicationNode multiplicationNode = (MultiplicationNode) root.Left;
+            Assert.True(result.Contains(multiplicationNode));
             Assert.True(result.Contains(root.Right));
-            Assert.True(result.Contains(multiplicationOperatorNode.Left));
-            Assert.True(result.Contains(multiplicationOperatorNode.Right));
+            Assert.True(result.Contains(multiplicationNode.Left));
+            Assert.True(result.Contains(multiplicationNode.Right));
         }
     }
 }

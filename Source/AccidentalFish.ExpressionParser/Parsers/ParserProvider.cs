@@ -33,21 +33,21 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 new SimpleLiteralParser(NotEqualNode.Literal, token => new NotEqualNode()),
                 new SimpleLiteralParser(NotNode.Literal, token => new NotNode()),
                 new SimpleLiteralParser(ConditionalOrNode.Literal, token => new ConditionalOrNode()),
-                new LookbackLiteralParser(AdditionOperatorNode.Literal, // we use a lookback operator to deal with negation and positive syntax e.g. 5+-3
+                new LookbackLiteralParser(AdditionNode.Literal, // we use a lookback operator to deal with negation and positive syntax e.g. 5+-3
                     (previous) => !(previous is OperatorNode),
-                    token => new AdditionOperatorNode()),
-                new LookbackLiteralParser(SubtractionOperatorNode.Literal,
+                    token => new AdditionNode()),
+                new LookbackLiteralParser(SubtractionNode.Literal,
                     (previous) => !(previous is OperatorNode),
-                    token => new SubtractionOperatorNode()),
-                new SimpleLiteralParser(MultiplicationOperatorNode.Literal, token => new MultiplicationOperatorNode()),
+                    token => new SubtractionNode()),
+                new SimpleLiteralParser(MultiplicationNode.Literal, token => new MultiplicationNode()),
                 new SimpleLiteralParser(PowerOperatorNode.Literal, token => new PowerOperatorNode()),
-                new SimpleLiteralParser(DivisionOperatorNode.Literal, token => new DivisionOperatorNode()),
+                new SimpleLiteralParser(DivisionNode.Literal, token => new DivisionNode()),
                 new LookbackLiteralParser(
-                    NegateOperatorNode.Literal,
+                    NegateNode.Literal,
                     previous => previous is OperatorNode,
-                    token => new NegateOperatorNode()),
+                    token => new NegateNode()),
                 new LookbackLiteralParser(
-                    AdditionOperatorNode.Literal,
+                    AdditionNode.Literal,
                     previous => previous is OperatorNode,
                     token => null), // we basically strip out non-additive + operators
                 // Values

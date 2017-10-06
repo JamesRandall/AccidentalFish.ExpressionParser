@@ -1,7 +1,10 @@
 # AccidentalFish.ExpressionParser
 
-Please note this project is work in progress. It is functional and the API is largely stable but you may trip over work in progress - functions in particular
-are very much work in progress.
+Please note this project is work in progress. It is functional and the API is largely stable but you may trip over work in progress. In particular 
+the following are still under development:
+
+	Functions
+	String support
 
 ## Introduction
 
@@ -10,6 +13,7 @@ convert it to an abstract syntax tree that can be used for further purposes. I'v
 I am using it to:
 
 * Generate terms for Elastic Search queries
+* Generate query clauses for Cosmos DB queries
 * Generate SQL sub queries (in a scenario where it was not possible to use LINQ)
 
 I've also bundled with this a simple converter that takes the expression tree, converts it to a LINQ expression tree, and compiles an
@@ -68,11 +72,53 @@ allows registration of an interface in your container. For example:
 All expression nodes ultimately deriver from the abstract ExpressionNode class but are (currently) sub categorised into:
 
 * Operators (deriving from OperatorNode) - addition, subtraction, equality etc.
-* Structural (deriving from StructuralNode) - break up expressions and may impact order of execution
-* Functions (deriving from FunctionNode) - pow, sin etc.
 * Values (deriving from ValueNode) - literal values and variables
+* Functions (deriving from FunctionNode) - pow, sin etc.
+* Structural (deriving from StructuralNode) - break up expressions and may impact the order of execution
 
 ### Operators
+
+|Operator|Type|
+|--------|----|
+|Addition|AdditionNode|
+|Conditional And|ConditionalAndNode|
+|Conditional Or|ConditionalOrNode|
+|Division|DivisionNode|
+|Equality Test|EqualNode|
+|Greater Than or Equal To|GreaterThanEqualNode|
+|Greater Than|GreaterThanNode|
+|Less Than or Equal To|LessThanEqualNode|
+|Multiplication|MultiplicationNode|
+|Negation|NegateNode|
+|Not|NotNode|
+|Subtraction|SubstractionNode|
+
+Operators are of one of two subtypes, either a binary node wit left and right associated nodes (for example the addition node)
+or a unary node with a single associated now (for example a negation node). They are derived from BinaryOperatorNode and UnaryOperatorNode
+respectively.
+
+### Values
+
+Values evaluate to either a double, an integer or a string and can be supplied as a literal within the expression or as a variable (a string
+preceded by the @ symbol). The example below demonstrates both:
+
+    5+3*@myvar
+
+Variables allow for the values to be retrieved at the time of evaluation or can be useful as placeholders when the expression tree is being used
+to translate into a different format.
+
+### Functions
+
+Function nodes derive from the FunctionNode class and when expressed in an expression string take the typical form of:
+
+    functionName(param1,param2)
+
+Built in functions include:
+
+_work in progress_
+
+
+
 
 ## Parsing Approach
 
