@@ -10,11 +10,11 @@ namespace AccidentalFish.ExpressionParser.Parsers
 {
     public class ParserProvider : IParserProvider
     {
-        private readonly IReadOnlyCollection<IParser> _parsers;
+        private static readonly IReadOnlyCollection<IParser> DefaultParsers;
 
-        public ParserProvider()
+        static ParserProvider()
         {
-            _parsers = new List<IParser>
+            DefaultParsers = new List<IParser>
             {
                 // TODO: I am wandering in the below if we an always say that a node cannot be preceded by a node of the same type.
                 // I think even with functions and function parameters that is still the case.
@@ -33,20 +33,21 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 new SimpleLiteralParser(NotEqualNode.Literal, token => new NotEqualNode()),
                 new SimpleLiteralParser(NotNode.Literal, token => new NotNode()),
                 new SimpleLiteralParser(ConditionalOrNode.Literal, token => new ConditionalOrNode()),
-                new LookbackLiteralParser(AdditionOperator.Literal, // we use a lookback operator to deal with negation and positive syntax e.g. 5+-3
+                new LookbackLiteralParser(AdditionOperatorNode.Literal, // we use a lookback operator to deal with negation and positive syntax e.g. 5+-3
                     (previous) => !(previous is OperatorNode),
-                    token => new AdditionOperator()),
-                new LookbackLiteralParser(SubtractionOperator.Literal,
+                    token => new AdditionOperatorNode()),
+                new LookbackLiteralParser(SubtractionOperatorNode.Literal,
                     (previous) => !(previous is OperatorNode),
-                    token => new SubtractionOperator()),
-                new SimpleLiteralParser(MultiplicationOperator.Literal, token => new MultiplicationOperator()),
-                new SimpleLiteralParser(DivisionOperator.Literal, token => new DivisionOperator()),
+                    token => new SubtractionOperatorNode()),
+                new SimpleLiteralParser(MultiplicationOperatorNode.Literal, token => new MultiplicationOperatorNode()),
+                new SimpleLiteralParser(PowerOperatorNode.Literal, token => new PowerOperatorNode()),
+                new SimpleLiteralParser(DivisionOperatorNode.Literal, token => new DivisionOperatorNode()),
                 new LookbackLiteralParser(
                     NegateOperatorNode.Literal,
                     previous => previous is OperatorNode,
                     token => new NegateOperatorNode()),
                 new LookbackLiteralParser(
-                    AdditionOperator.Literal,
+                    AdditionOperatorNode.Literal,
                     previous => previous is OperatorNode,
                     token => null), // we basically strip out non-additive + operators
                 // Values
@@ -58,9 +59,11 @@ namespace AccidentalFish.ExpressionParser.Parsers
             };
         }
 
-        public ParserProvider(IEnumerable<IParser> parsers)
+        private readonly IReadOnlyCollection<IParser> _parsers;
+
+        public ParserProvider(IEnumerable<IParser> parsers = null)
         {
-            _parsers = parsers.ToList();
+            _parsers = (parsers ?? DefaultParsers).ToList();
         }
 
         public IReadOnlyCollection<IParser> Get()

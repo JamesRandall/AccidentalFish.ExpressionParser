@@ -39,7 +39,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.Equal(3, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.Equal(3, ((IntValueNode) result[2]).Value);
         }
 
@@ -51,7 +51,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.Equal(3, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.Equal(3, ((IntValueNode)result[2]).Value);
         }
 
@@ -63,7 +63,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.Equal(5, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.Equal(3, ((IntValueNode)result[2]).Value);
             Assert.IsType<EqualNode>(result[3]);
             Assert.Equal(8, ((IntValueNode)result[4]).Value);
@@ -76,7 +76,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionNode[] result = testSubject.Split("5+-3").ToArray();
             Assert.Equal(4, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.IsType<NegateOperatorNode>(result[2]);
             Assert.Equal(3, ((IntValueNode)result[3]).Value);
         }
@@ -88,7 +88,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionNode[] result = testSubject.Split("5+-+3").ToArray();
             Assert.Equal(4, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.IsType<NegateOperatorNode>(result[2]);
             Assert.Equal(3, ((IntValueNode)result[3]).Value);
         }
@@ -100,7 +100,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             ExpressionNode[] result = testSubject.Split("5++-++3").ToArray();
             Assert.Equal(4, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.IsType<NegateOperatorNode>(result[2]);
             Assert.Equal(3, ((IntValueNode)result[3]).Value);
         }
@@ -113,7 +113,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.Equal(5, result.Length);
             Assert.Equal(5, ((IntValueNode)result[0]).Value);
-            Assert.IsType<AdditionOperator>(result[1]);
+            Assert.IsType<AdditionOperatorNode>(result[1]);
             Assert.IsType<VariableNode>(result[2]);
             Assert.IsType<EqualNode>(result[3]);
             Assert.IsType<VariableNode>(result[4]);
@@ -129,10 +129,10 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             Assert.Equal(7, result.Length);
             Assert.IsType<OpenBracketNode>(result[0]);
             Assert.Equal(9, ((IntValueNode)result[1]).Value);
-            Assert.IsType<AdditionOperator>(result[2]);
+            Assert.IsType<AdditionOperatorNode>(result[2]);
             Assert.Equal(3, ((IntValueNode)result[3]).Value);
             Assert.IsType<CloseBracketNode>(result[4]);
-            Assert.IsType<DivisionOperator>(result[5]);
+            Assert.IsType<DivisionOperatorNode>(result[5]);
         }
     }
 }

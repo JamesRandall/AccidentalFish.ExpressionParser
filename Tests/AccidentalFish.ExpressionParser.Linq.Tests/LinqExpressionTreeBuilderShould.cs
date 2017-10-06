@@ -11,8 +11,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateIntegerAdditionExpression()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+3");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+3");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -25,8 +25,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateSimpleTwoOperatorExpression()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+3*2");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+3*2");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -39,8 +39,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateSimpleExpressionIncludingNegation()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+-3");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+-3");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -53,8 +53,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateSimpleExpressionIncludingDoubleNegation()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+--3");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+--3");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -67,8 +67,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateSimpleExpressionIncludingUnrequiredPositiveSigns()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5-+++3");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5-+++3");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -81,8 +81,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateBracketedOperatorExpression()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("(5+3)*2");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("(5+3)*2");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Expression expression = testSubject.Build(node);
 
             var lambda = Expression.Lambda<Func<int>>(expression);
@@ -95,8 +95,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateAdditionExpressionWithVariable()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+@myvar");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+@myvar");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Dictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
             {
                 {"@myvar", Expression.Parameter(typeof(int), "@myvar")}
@@ -113,8 +113,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
         [Fact]
         public void CreateAdditionExpressionWithVariableAndNegation()
         {
-            ExpressionNode node = ExpressionFactory.ParseExpression("5+-@myvar");
-            LinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            ExpressionNode node = ExpressionFactory.Parse("5+-@myvar");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
             Dictionary<string, ParameterExpression> parameters = new Dictionary<string, ParameterExpression>
             {
                 {"@myvar", Expression.Parameter(typeof(int), "@myvar")}
@@ -126,6 +126,21 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
             var result = func(3);
 
             Assert.Equal(2, result);
+        }
+
+        
+        [Fact(Skip = "Moved to a function, functions not yet implemented")]
+        public void MultiplicationAndPowerExpression()
+        {
+            ExpressionNode node = ExpressionFactory.Parse("pow(5*3,4)");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            Expression expression = testSubject.Build(node);
+
+            var lambda = Expression.Lambda<Func<double>>(expression);
+            var func = lambda.Compile();
+            var result = func();
+
+            Assert.Equal(405, result);
         }
     }
 }

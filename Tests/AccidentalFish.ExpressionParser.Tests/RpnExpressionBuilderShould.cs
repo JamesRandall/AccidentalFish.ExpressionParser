@@ -15,7 +15,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             List<ExpressionNode> components = new List<ExpressionNode>
             {
                 new IntValueNode(5),
-                new AdditionOperator(),
+                new AdditionOperatorNode(),
                 new IntValueNode(10)
             };
             RpnExpressionBuilder testSubject = new RpnExpressionBuilder();
@@ -24,7 +24,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.IsType<IntValueNode>(rpnExpression[0]);
             Assert.IsType<IntValueNode>(rpnExpression[1]);
-            Assert.IsType<AdditionOperator>(rpnExpression[2]);
+            Assert.IsType<AdditionOperatorNode>(rpnExpression[2]);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             List<ExpressionNode> components = new List<ExpressionNode>
             {
                 new IntValueNode(5),
-                new AdditionOperator(),
+                new AdditionOperatorNode(),
                 new VariableNode("@myVariablke")
             };
             RpnExpressionBuilder testSubject = new RpnExpressionBuilder();
@@ -42,7 +42,7 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
 
             Assert.IsType<IntValueNode>(rpnExpression[0]);
             Assert.IsType<VariableNode>(rpnExpression[1]);
-            Assert.IsType<AdditionOperator>(rpnExpression[2]);
+            Assert.IsType<AdditionOperatorNode>(rpnExpression[2]);
         }
     }
 }

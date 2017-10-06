@@ -13,16 +13,16 @@ namespace AccidentalFish.ExpressionParser.Linq
     {
         // TODO: Intention of this is to (attempt!) to build a linq expression tree
         // that can then be compiled into a lambda
-        public Expression Build(ExpressionNode node, Dictionary<string, ParameterExpression> parameters=null)
+        Expression ILinqExpressionTreeBuilder.Build(ExpressionNode node, Dictionary<string, ParameterExpression> parameters=null)
         {
             Expression result = RecursivelyBuild(node, parameters);
 
             return result;
         }
 
-        public static Expression BuildLinq(ExpressionNode node, Dictionary<string, ParameterExpression> parameters = null)
+        public static Expression Build(ExpressionNode node, Dictionary<string, ParameterExpression> parameters = null)
         {
-            return new LinqExpressionTreeBuilder().Build(node, parameters);
+            return ((ILinqExpressionTreeBuilder)new LinqExpressionTreeBuilder()).Build(node, parameters);
         }
 
         private Expression RecursivelyBuild(ExpressionNode node, Dictionary<string, ParameterExpression> parameters)

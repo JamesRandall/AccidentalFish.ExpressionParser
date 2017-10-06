@@ -4,7 +4,7 @@ using AccidentalFish.ExpressionParser.Parsers;
 
 namespace AccidentalFish.ExpressionParser
 {
-    public class ExpressionFactory : IExpressionFactory
+    public sealed class ExpressionFactory : IExpressionFactory
     {
         private readonly IRpnExpressionBuilder _rpnExpressionBuilder;
         private readonly IExpressionSplitter _expressionSplitter;
@@ -19,7 +19,7 @@ namespace AccidentalFish.ExpressionParser
             _expressionTreeBuilder = expressionTreeBuilder;
         }
 
-        public ExpressionNode Parse(string expression)
+        ExpressionNode IExpressionFactory.Parse(string expression)
         {
             IReadOnlyCollection<ExpressionNode> components = _expressionSplitter.Split(expression);
             RpnExpression rpnExpression = _rpnExpressionBuilder.Build(components);
@@ -28,7 +28,7 @@ namespace AccidentalFish.ExpressionParser
             return node;
         }
 
-        public static ExpressionNode ParseExpression(string expression, IParserProvider parserProvider=null)
+        public static ExpressionNode Parse(string expression, IParserProvider parserProvider=null)
         {
             IExpressionFactory expressionFactory = new ExpressionFactory(
                 new RpnExpressionBuilder(),

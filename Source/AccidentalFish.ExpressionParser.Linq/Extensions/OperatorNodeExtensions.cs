@@ -12,18 +12,23 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
         private static readonly Dictionary<Type, Func<Expression, Expression, Expression>> _binaryFactories =
             new Dictionary<Type, Func<Expression, Expression, Expression>>
             {
-                {typeof(AdditionOperator), Expression.Add},
+                {typeof(AdditionOperatorNode), Expression.Add},
                 {typeof(ConditionalAndNode), Expression.AndAlso},
                 {typeof(ConditionalOrNode), Expression.OrElse},
-                {typeof(DivisionOperator), Expression.Divide},
+                {typeof(DivisionOperatorNode), Expression.Divide},
                 {typeof(EqualNode), Expression.Equal},
                 {typeof(GreaterThanEqualNode), Expression.GreaterThanOrEqual},
                 {typeof(GreaterThanNode), Expression.GreaterThan},
                 {typeof(LessThanEqualNode), Expression.LessThan},
                 {typeof(LessThanNode), Expression.LessThan},
-                {typeof(MultiplicationOperator), Expression.Multiply},
+                {typeof(MultiplicationOperatorNode), Expression.Multiply},
                 {typeof(NotEqualNode), Expression.NotEqual},
-                {typeof(SubtractionOperator), Expression.Subtract}
+                {typeof(SubtractionOperatorNode), Expression.Subtract},
+                {typeof(PowerOperatorNode), (l,r) =>
+                    {
+                        return Expression.Power(Expression.Convert(l, typeof(double)), Expression.Convert(r, typeof(double)));
+                    }
+                }
             };
 
         private static readonly Dictionary<Type, Func<Expression, Expression>> _unaryFactories = 
