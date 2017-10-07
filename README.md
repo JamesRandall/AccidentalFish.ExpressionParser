@@ -149,10 +149,10 @@ Splitting the expression into an object model works as follows:
 
 1. Begin scanning the string
 2. For each scan of the string
-2.1. Build a copy of the list of installed parsers
-2.2. Move forward through the string a character at a time (ignoring whitespace) and removing parsers that don't match and keeping track of the last positive matches
-2.3. When no parsers are left, look at the last set of positive matches and it should contain a single parser - if so invoke the factory and add the resulting node to the list of found nodes. If there is more than one match then the expression syntax has been set up in an ambigous fashion or the expression is faulty so throw an error
-2.4. Backtrack one character and repeat the process scanning the string again until the end of the string is reached
+3. Build a copy of the list of installed parsers
+4. Move forward through the string a character at a time (ignoring whitespace) and removing parsers that don't match and keeping track of the last positive matches
+5. When no parsers are left, look at the last set of positive matches and it should contain a single parser - if so invoke the factory and add the resulting node to the list of found nodes. If there is more than one match then the expression syntax has been set up in an ambigous fashion or the expression is faulty so throw an error
+6. Backtrack one character and repeat the process scanning the string again until the end of the string is reached
 
 The process is simple and works on the basis that there is no forward looking ambiguity (i.e. the splitter does not need to look ahead to determine if the current token is ambiguous).
 
