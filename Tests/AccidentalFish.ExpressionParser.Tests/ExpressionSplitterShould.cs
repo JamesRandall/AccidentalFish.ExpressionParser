@@ -7,7 +7,7 @@ using AccidentalFish.ExpressionParser.Nodes.Values;
 using AccidentalFish.ExpressionParser.Parsers;
 using Xunit;
 
-namespace AccidentalFish.ExpressionParser.Tests.Unit
+namespace AccidentalFish.ExpressionParser.Tests
 {
     public class ExpressionSplitterShould
     {

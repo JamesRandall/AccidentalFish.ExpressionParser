@@ -8,7 +8,7 @@
         {
         }
 
-        public NegateNode(AssociativityEnum associativity, PrecedenceEnum precedence, ExpressionNode associatedNode) : base(associativity, precedence, associatedNode)
+        public NegateNode(ExpressionNode associatedNode) : base(AssociativityEnum.Right, PrecedenceEnum.Unary, associatedNode)
         {
         }
     }

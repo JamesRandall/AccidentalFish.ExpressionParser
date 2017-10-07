@@ -31,21 +31,7 @@ namespace AccidentalFish.ExpressionParser
                 }
                 else if (component is OperatorNode operatorNode)
                 {
-                    if (shuntingStack.Any())
-                    {
-                        if (shuntingStack.Peek() is OperatorNode head)
-                        {
-                            if ((operatorNode.Associativity == OperatorNode.AssociativityEnum.Left &&
-                                 operatorNode.Precedence <= head.Precedence) ||
-                                (operatorNode.Associativity == OperatorNode.AssociativityEnum.Right &&
-                                 operatorNode.Precedence < head.Precedence))
-                            {
-                                shuntingStack.Pop();
-                                result.Add(head);
-                            }
-                        }
-                    }
-                    shuntingStack.Push(operatorNode);
+                    HandleOperator(shuntingStack, operatorNode, result);
                 }
                 else if (component is ValueNode)
                 {
@@ -80,6 +66,25 @@ namespace AccidentalFish.ExpressionParser
             }
 
             return new RpnExpression(result);
+        }
+
+        private static void HandleOperator(Stack<ExpressionNode> shuntingStack, OperatorNode operatorNode, List<ExpressionNode> result)
+        {
+            if (shuntingStack.Any())
+            {
+                if (shuntingStack.Peek() is OperatorNode head)
+                {
+                    if ((operatorNode.Associativity == OperatorNode.AssociativityEnum.Left &&
+                         operatorNode.Precedence <= head.Precedence) ||
+                        (operatorNode.Associativity == OperatorNode.AssociativityEnum.Right &&
+                         operatorNode.Precedence < head.Precedence))
+                    {
+                        shuntingStack.Pop();
+                        result.Add(head);
+                    }
+                }
+            }
+            shuntingStack.Push(operatorNode);
         }
     }
 }

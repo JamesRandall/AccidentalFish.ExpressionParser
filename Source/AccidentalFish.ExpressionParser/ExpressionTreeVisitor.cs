@@ -24,15 +24,22 @@ namespace AccidentalFish.ExpressionParser
             {
                 ExpressionNode node = stack.Pop();
                 yield return node;
-                if (node is BinaryOperatorNode operatorNode)
+                if (node is BinaryOperatorNode binaryOperatorNode)
                 {
-                    if (operatorNode.Left != null)
+                    if (binaryOperatorNode.Left != null)
                     {
-                        stack.Push(operatorNode.Left);
+                        stack.Push(binaryOperatorNode.Left);
                     }
-                    if (operatorNode.Right != null)
+                    if (binaryOperatorNode.Right != null)
                     {
-                        stack.Push(operatorNode.Right);
+                        stack.Push(binaryOperatorNode.Right);
+                    }
+                }
+                else if (node is UnaryOperatorNode unaryOperatorNode)
+                {
+                    if (unaryOperatorNode.AssociatedNode != null)
+                    {
+                        stack.Push(unaryOperatorNode.AssociatedNode);
                     }
                 }
                 else if (node is VariableParamsFunctionNode functionNode)

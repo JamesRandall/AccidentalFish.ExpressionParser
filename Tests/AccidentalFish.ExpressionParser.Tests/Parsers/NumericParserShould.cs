@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AccidentalFish.ExpressionParser.Parsers;
+﻿using AccidentalFish.ExpressionParser.Parsers;
 using Xunit;
 
 namespace AccidentalFish.ExpressionParser.Tests.Parsers

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AccidentalFish.ExpressionParser.Nodes.Functions
+﻿namespace AccidentalFish.ExpressionParser.Nodes.Functions
 {
     public class MaxNode : VariableParamsFunctionNode
     {
