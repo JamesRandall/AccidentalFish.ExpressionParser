@@ -5,21 +5,23 @@ namespace AccidentalFish.ExpressionParser.Parsers
 {
     public class FunctionParser : IParser
     {
+        private readonly string _functionName;
         private readonly Func<string, ExpressionNode> _factory;
-
-        public FunctionParser(Func<string, ExpressionNode> factory)
+        
+        public FunctionParser(string functionName, Func<string, ExpressionNode> factory)
         {
+            _functionName = functionName;
             _factory = factory;
         }
 
         public bool IsPartialMatch(string partialToken, ExpressionNode last)
         {
-            throw new NotImplementedException();
+            return _functionName.StartsWith(partialToken);
         }
 
         public bool IsCompleteMatch(string token)
         {
-            throw new NotImplementedException();
+            return _functionName.Equals(token);
         }
 
         public Func<string, ExpressionNode> Factory => _factory;

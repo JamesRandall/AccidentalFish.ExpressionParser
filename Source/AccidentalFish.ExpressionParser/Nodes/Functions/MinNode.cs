@@ -2,7 +2,7 @@
 {
     public class MinNode : VariableParamsFunctionNode
     {
-        public const string Literal = "max";
+        public const string Literal = "min";
 
         public MinNode()
         {

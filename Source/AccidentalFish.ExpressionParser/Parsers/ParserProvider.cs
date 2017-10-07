@@ -22,7 +22,6 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 // Functions
                 new SimpleLiteralParser(MaxNode.Literal, token => new MaxNode()),
                 new SimpleLiteralParser(MinNode.Literal, token => new MinNode()),
-                new SimpleLiteralParser(ParameterSeparatorNode.Literal, token => new ParameterSeparatorNode()),
                 // Operators
                 new SimpleLiteralParser(ConditionalAndNode.Literal, token => new ConditionalAndNode()),
                 new SimpleLiteralParser(EqualNode.Literal, token => new EqualNode()),
@@ -54,7 +53,8 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 new VariableParser((token) => new VariableNode(token)),
                 // Structural
                 new SimpleLiteralParser(OpenBracketNode.Literal, token => new OpenBracketNode()),
-                new SimpleLiteralParser(CloseBracketNode.Literal, token => new CloseBracketNode())
+                new SimpleLiteralParser(CloseBracketNode.Literal, token => new CloseBracketNode()),
+                new SimpleLiteralParser(ParameterDelimiterNode.Literal, token => new ParameterDelimiterNode())
             };
         }
 

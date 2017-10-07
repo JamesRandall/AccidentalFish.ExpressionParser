@@ -52,6 +52,11 @@ namespace AccidentalFish.ExpressionParser
                 }
 
                 currentLength = ExtractNextNoneWhitespaceCharacter(remainingExpression, currentLength, ref partialToken);
+                if (partialToken.Length == 0)
+                {
+                    // we ended on whitespace
+                    break;
+                }
 
                 IReadOnlyCollection<IParser> stillValidParsers = possibleParsers.Where(x => x.IsPartialMatch(partialToken, lastNode)).ToList();
 
@@ -100,7 +105,10 @@ namespace AccidentalFish.ExpressionParser
                 nextCharacter = remainingExpression.Substring(currentLength, 1);
                 currentLength++;
             } while (IsWhitespace(nextCharacter) && currentLength < remainingExpression.Length);
-            partialToken = partialToken + nextCharacter;
+            if (!IsWhitespace(nextCharacter))
+            {
+                partialToken = partialToken + nextCharacter;
+            }
             return currentLength;
         }
 

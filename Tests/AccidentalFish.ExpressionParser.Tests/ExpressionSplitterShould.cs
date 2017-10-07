@@ -134,5 +134,12 @@ namespace AccidentalFish.ExpressionParser.Tests.Unit
             Assert.IsType<CloseBracketNode>(result[4]);
             Assert.IsType<DivisionNode>(result[5]);
         }
+
+        [Fact]
+        public void SplitsSimpleFunction()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("max(2,3)").ToArray();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace AccidentalFish.ExpressionParser
                 {
                     shuntingStack.Push(component);
                 }
-                else if (component is ParameterSeparatorNode)
+                else if (component is ParameterDelimiterNode)
                 {
                     while (!(shuntingStack.Peek() is OpenBracketNode))
                     {
