@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using AccidentalFish.ExpressionParser.Linq.Exceptions;
 using AccidentalFish.ExpressionParser.Nodes.Operators;
 
@@ -9,7 +8,7 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
 {
     internal static class OperatorNodeExtensions
     {
-        private static readonly Dictionary<Type, Func<Expression, Expression, Expression>> _binaryFactories =
+        private static readonly Dictionary<Type, Func<Expression, Expression, Expression>> BinaryFactories =
             new Dictionary<Type, Func<Expression, Expression, Expression>>
             {
                 {typeof(AdditionNode), Expression.Add},
@@ -23,15 +22,10 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
                 {typeof(LessThanNode), Expression.LessThan},
                 {typeof(MultiplicationNode), Expression.Multiply},
                 {typeof(NotEqualNode), Expression.NotEqual},
-                {typeof(SubtractionNode), Expression.Subtract},
-                {typeof(PowerOperatorNode), (l,r) =>
-                    {
-                        return Expression.Power(Expression.Convert(l, typeof(double)), Expression.Convert(r, typeof(double)));
-                    }
-                }
+                {typeof(SubtractionNode), Expression.Subtract}
             };
 
-        private static readonly Dictionary<Type, Func<Expression, Expression>> _unaryFactories = 
+        private static readonly Dictionary<Type, Func<Expression, Expression>> UnaryFactories = 
             new Dictionary<Type, Func<Expression, Expression>>
             {
                 {typeof(NotNode), Expression.Not },
@@ -40,7 +34,7 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
 
         public static Expression CreateLinq(this BinaryOperatorNode operatorNode, Expression left, Expression right)
         {
-            if (_binaryFactories.TryGetValue(operatorNode.GetType(), out Func<Expression, Expression, Expression> factory))
+            if (BinaryFactories.TryGetValue(operatorNode.GetType(), out Func<Expression, Expression, Expression> factory))
             {
                 return factory(left, right);
             }
@@ -49,7 +43,7 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
 
         public static Expression CreateLinq(this UnaryOperatorNode operatorNode, Expression node)
         {
-            if (_unaryFactories.TryGetValue(operatorNode.GetType(), out Func<Expression, Expression> factory))
+            if (UnaryFactories.TryGetValue(operatorNode.GetType(), out Func<Expression, Expression> factory))
             {
                 return factory(node);
             }

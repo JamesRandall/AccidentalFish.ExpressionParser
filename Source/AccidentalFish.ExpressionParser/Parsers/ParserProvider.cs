@@ -40,7 +40,6 @@ namespace AccidentalFish.ExpressionParser.Parsers
                     (previous) => !(previous is OperatorNode),
                     token => new SubtractionNode()),
                 new SimpleLiteralParser(MultiplicationNode.Literal, token => new MultiplicationNode()),
-                new SimpleLiteralParser(PowerOperatorNode.Literal, token => new PowerOperatorNode()),
                 new SimpleLiteralParser(DivisionNode.Literal, token => new DivisionNode()),
                 new LookbackLiteralParser(
                     NegateNode.Literal,
