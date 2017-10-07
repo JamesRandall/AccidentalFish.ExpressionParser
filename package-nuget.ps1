@@ -25,6 +25,6 @@ if ($pushLocal)
 
 if ($pushNuget)
 {
-	dotnet nuget push .\Source\AccidentalFish.ExpressionParser\bin\debug\*.nupkg --source nuget.org
-	dotnet nuget push .\Source\AccidentalFish.ExpressionParser.Linq\bin\debug\*.nupkg --source nuget.org
+	dotnet nuget push .\Source\AccidentalFish.ExpressionParser\bin\debug\*.nupkg --source https://www.nuget.org/api/v2/package
+	dotnet nuget push .\Source\AccidentalFish.ExpressionParser.Linq\bin\debug\*.nupkg --source https://www.nuget.org/api/v2/package
 }
