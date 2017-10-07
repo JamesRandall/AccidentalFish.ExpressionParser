@@ -10,7 +10,7 @@ namespace AccidentalFish.ExpressionParser.Parsers
 {
     public class ParserProvider : IParserProvider
     {
-        private static readonly IReadOnlyCollection<IParser> DefaultParsers;
+        public static readonly IReadOnlyCollection<IParser> DefaultParsers;
 
         static ParserProvider()
         {
@@ -22,6 +22,8 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 // Functions
                 new SimpleLiteralParser(MaxNode.Literal, token => new MaxNode()),
                 new SimpleLiteralParser(MinNode.Literal, token => new MinNode()),
+                new SimpleLiteralParser(PowNode.Literal, token => new PowNode()),
+                new SimpleLiteralParser(SqrtNode.Literal, token => new SqrtNode()),
                 // Operators
                 new SimpleLiteralParser(ConditionalAndNode.Literal, token => new ConditionalAndNode()),
                 new SimpleLiteralParser(EqualNode.Literal, token => new EqualNode()),

@@ -21,6 +21,10 @@ namespace AccidentalFish.ExpressionParser
                 if (component is FunctionNode)
                 {
                     shuntingStack.Push(component);
+                    // if we want to add support for functions that support variable lengths
+                    // of parameters we will need to drop a parameter start marker onto result
+                    // here. E.g.:
+                    //    result.Add(new ParameterSetBeginMarkerNode())
                 }
                 else if (component is ParameterDelimiterNode)
                 {

@@ -3,8 +3,8 @@
 Please note this project is work in progress. It is functional and the API is largely stable but you may trip over work in progress. In particular 
 the following are still under development:
 
-	Functions
 	String support
+	Linq builder
 
 ## Introduction
 
@@ -108,6 +108,8 @@ Operators are of one of two subtypes, either a binary node wit left and right as
 or a unary node with a single associated now (for example a negation node). They are derived from BinaryOperatorNode and UnaryOperatorNode
 respectively.
 
+Associativty and precdence is based on C#.
+
 ### Values
 
 Values evaluate to either a double, an integer or a string and can be supplied as a literal within the expression or as a variable (a string
@@ -126,16 +128,50 @@ Function nodes derive from the FunctionNode class and when expressed in an expre
 
 Built in functions include:
 
-_work in progress_
-
-
-
+|Function|Type|Example|
+|--------|----|-------|
+|max|MaxNode|max(5,3)|
+|min|MinNode|min(8,3*3)|
+|pow|PowNode|pow(2,4)|
+|sqrt|SqrtNode|sqrt(16)|
 
 ## Parsing Approach
 
+To get from a string to an expression tree this library takes a 3 step approach:
+
+1. Split the string into an object model collection ordered in the same order in which it is expressed
+2. Rearrange the object model collection into reverse polish notation (RPN)
+3. Convert the RPN object model collection into a tree and return the root node
+
+Steps 2 and 3 follow a fairly typical [shunting yard](https://en.wikipedia.org/wiki/Shunting-yard_algorithm) approach.
+
+Splitting the expression into an object model works as follows:
+
+1. Begin scanning the string
+2. For each scan of the string
+2.1. Build a copy of the list of installed parsers
+2.2. Move forward through the string a character at a time (ignoring whitespace) and removing parsers that don't match and keeping track of the last positive matches
+2.3. When no parsers are left, look at the last set of positive matches and it should contain a single parser - if so invoke the factory and add the resulting node to the list of found nodes. If there is more than one match then the expression syntax has been set up in an ambigous fashion or the expression is faulty so throw an error
+2.4. Backtrack one character and repeat the process scanning the string again until the end of the string is reached
+
+The process is simple and works on the basis that there is no forward looking ambiguity (i.e. the splitter does not need to look ahead to determine if the current token is ambiguous).
+
 ## Adding Custom Node Types
+
+To supply a custom set of node types to the expression parser take the following steps:
+
+1. Derive your node from either FunctionNode, OperatorNode or ValueNode as appropriate
+2. Decide on a literal representation for your node (for example a function name)
+3. Create a parser handler for your new node, you can see examples for the defaults in ParserProvider.cs and add it to the list of supported parsers
+4. Crete a ParserProvider from this list and pass it to ExpressionFactory.Parse(). _Note:_ if you're using an IoC container you'll need to register your parser as an IParserProvider implementation.
+
+A simple example is shown below for a random number function:
+
+    List<IParser> parsers = new List<IParser>(ParserProvider.DefaultParsers);
+	parsers.Add(new SimpleLiteralParser(RandomNode.Literal, token => new RandomNode()));
+	ExpressionNode root = ExpressFactory.Parse("5+random()", parsers);
 
 ## Tests
 
 Just a quick note about the tests - they're a mix of unit and integration developed in a vaguely TDD sense and in a manner
-that helped me get from start to something working as quickly as possible.
+that helped me to bootstrap up to something working as quickly as possible.

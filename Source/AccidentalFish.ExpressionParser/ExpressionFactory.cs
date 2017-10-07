@@ -28,11 +28,20 @@ namespace AccidentalFish.ExpressionParser
             return node;
         }
 
-        public static ExpressionNode Parse(string expression, IParserProvider parserProvider=null)
+        public static ExpressionNode Parse(string expression)
         {
             IExpressionFactory expressionFactory = new ExpressionFactory(
                 new RpnExpressionBuilder(),
-                new ExpressionSplitter(parserProvider ?? new ParserProvider()),
+                new ExpressionSplitter(new ParserProvider()),
+                new ExpressionTreeBuilder());
+            return expressionFactory.Parse(expression);
+        }
+
+        public static ExpressionNode Parse(string expression, IParserProvider parserProvider)
+        {
+            IExpressionFactory expressionFactory = new ExpressionFactory(
+                new RpnExpressionBuilder(),
+                new ExpressionSplitter(parserProvider),
                 new ExpressionTreeBuilder());
             return expressionFactory.Parse(expression);
         }
