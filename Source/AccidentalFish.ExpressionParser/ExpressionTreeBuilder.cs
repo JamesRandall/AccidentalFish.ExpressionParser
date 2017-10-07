@@ -22,13 +22,14 @@ namespace AccidentalFish.ExpressionParser
                 {
                     unaryOperatorNode.AssociatedNode = shuntingStack.Pop();
                 }
-                else if (node is VariableParamsFunctionNode functionNode)
+                else if (node is FunctionNode functionNode)
                 {
-                    // TODO: nneds work
-                    for (int index = 0; index < functionNode.Parameters.Count; index++)
+                    ExpressionNode[] parameters = new ExpressionNode[functionNode.NumberOfParameters()];
+                    for (int index = 0; index < functionNode.NumberOfParameters(); index++)
                     {
-                        ExpressionNode parameterNode = shuntingStack.Pop();
+                        parameters[functionNode.NumberOfParameters() - index - 1] = shuntingStack.Pop();
                     }
+                    functionNode.Parameters = parameters;
                 }
                 shuntingStack.Push(node);
             }

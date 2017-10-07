@@ -43,7 +43,6 @@ namespace AccidentalFish.ExpressionParser
                 }
                 else if (component is CloseBracketNode)
                 {
-                    Debug.Assert(shuntingStack.Any(), "At least one item should be on the shunting stack");
                     while (!(shuntingStack.Peek() is OpenBracketNode))
                     {
                         result.Add(shuntingStack.Pop());

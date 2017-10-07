@@ -42,7 +42,7 @@ namespace AccidentalFish.ExpressionParser
                         stack.Push(unaryOperatorNode.AssociatedNode);
                     }
                 }
-                else if (node is VariableParamsFunctionNode functionNode)
+                else if (node is FunctionNode functionNode)
                 {
                     foreach (ExpressionNode parameterNode in functionNode.Parameters)
                     {
