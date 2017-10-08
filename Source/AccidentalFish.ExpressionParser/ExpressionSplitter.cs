@@ -58,15 +58,16 @@ namespace AccidentalFish.ExpressionParser
                     break;
                 }
 
-                IReadOnlyCollection<IParser> stillValidParsers = possibleParsers.Where(x => x.IsPartialMatch(partialToken, lastNode)).ToList();
+                IReadOnlyCollection<IParser> stillValidParsers = possibleParsers.Where(x => x.IsPartialMatch(partialToken, lastNode)).ToArray();
 
                 if (stillValidParsers.Count == 0)
                 {
-                    if (possibleParsers.Count > 1)
+                    IReadOnlyCollection<IParser> remainingParsersAfterCompleteMatch = possibleParsers.Where(x => x.IsCompleteMatch(partialToken.Substring(0, partialToken.Length-1))).ToArray();
+                    if (remainingParsersAfterCompleteMatch.Count > 1)
                     {
                         throw new ExpressionParseException($"Syntax error. Expression component {remainingExpression} is ambiguous.");
                     }
-                    newNode = possibleParsers.Single().Factory(partialToken.Substring(0, partialToken.Length - 1));
+                    newNode = remainingParsersAfterCompleteMatch.Single().Factory(partialToken.Substring(0, partialToken.Length - 1));
                     remainingExpression = remainingExpression.Substring(currentLength-1);
                     currentLength = 0;
                 }

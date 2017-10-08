@@ -136,6 +136,30 @@ namespace AccidentalFish.ExpressionParser.Tests
         }
 
         [Fact]
+        public void CorrectlyDifferentiateLessThanOperator()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("5 < 10000").ToArray();
+
+            Assert.Equal(3, result.Length);
+            Assert.Equal(5, ((IntValueNode) result[0]).Value);
+            Assert.IsType<LessThanNode>(result[1]);
+            Assert.Equal(10000, ((IntValueNode) result[2]).Value);
+        }
+
+        [Fact]
+        public void CorrectlyDifferentiateLessThanEqualOperator()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("5 <= 10000").ToArray();
+
+            Assert.Equal(3, result.Length);
+            Assert.Equal(5, ((IntValueNode)result[0]).Value);
+            Assert.IsType<LessThanEqualNode>(result[1]);
+            Assert.Equal(10000, ((IntValueNode)result[2]).Value);
+        }
+
+        [Fact]
         public void SplitsSimpleFunction()
         {
             ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());

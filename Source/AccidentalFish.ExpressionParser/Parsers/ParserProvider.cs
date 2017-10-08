@@ -64,7 +64,14 @@ namespace AccidentalFish.ExpressionParser.Parsers
 
         public ParserProvider(IEnumerable<IParser> parsers = null)
         {
-            _parsers = (parsers ?? DefaultParsers).ToList();
+            if (parsers != null && parsers.Any())
+            {
+                _parsers = parsers.ToList();
+            }
+            else
+            {
+                _parsers = DefaultParsers;
+            }
         }
 
         public IReadOnlyCollection<IParser> Get()

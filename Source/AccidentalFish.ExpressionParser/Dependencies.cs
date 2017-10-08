@@ -1,4 +1,5 @@
 ﻿using System;
+using AccidentalFish.ExpressionParser.Parsers;
 
 namespace AccidentalFish.ExpressionParser
 {
@@ -10,6 +11,7 @@ namespace AccidentalFish.ExpressionParser
             registerImplementationFunc(typeof(IExpressionSplitter), typeof(ExpressionSplitter));
             registerImplementationFunc(typeof(IExpressionTreeBuilder), typeof(ExpressionTreeBuilder));
             registerImplementationFunc(typeof(IRpnExpressionBuilder), typeof(RpnExpressionBuilder));
+            registerImplementationFunc(typeof(IParserProvider), typeof(ParserProvider));
         }
     }
 }
