@@ -4,7 +4,7 @@
     {
         public const string Literal = "&&";
 
-        public ConditionalAndNode() : base(AssociativityEnum.Left, PrecedenceEnum.Relational)
+        public ConditionalAndNode() : base(AssociativityEnum.Left, PrecedenceEnum.Conditional)
         {
         }
 

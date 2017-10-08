@@ -4,7 +4,7 @@
     {
         public const string Literal = "||";
 
-        public ConditionalOrNode() : base(AssociativityEnum.Left, PrecedenceEnum.Relational)
+        public ConditionalOrNode() : base(AssociativityEnum.Left, PrecedenceEnum.Conditional)
         {
         }
 
