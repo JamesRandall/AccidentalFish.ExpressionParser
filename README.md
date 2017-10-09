@@ -38,31 +38,7 @@ tree a visitor implementation is provided that will walk the tree as an IEnumera
 		Console.WriteLine($"Expression node of type {node.GetType().Name}");
 	}
 
-More information on the expression nodes can be found below. 
-
-## Compiling Linq Expressions
-
-_Note:_ Please be aware that compiling LINQ expressions was not my original goal for this library and so
-there are likely to be dragons here and considerable scope for improvement. I've validated things just enough
-to aid my unit testing (being able to compile and evaluate the expression is a nice external way
-of ensuring the syntax is as expected, as opposed to the tests self-validating my assumptions about associativity and precedence).
-
-All that said no doubt I will improve this over time.
-
-To build the tree into a LINQ expression, compile, and
-evaluate it first add the LINQ package from NuGet:
-
-    Install-Package AccidentalFish.ExpressionParser.Linq
-
-Now, continuing with our example, the following code will build and compile the expression and display the output:
-
-    Expression expression = LinqExpressionTreeBuilder.Build(rootNode);
-	Expression<Func<int>> lambda = Expression.Lambda<Func<int>>(expression);
-	Func<int> func = lambda.Compile();
-	int result = func();
-	Console.WriteLine($"The expression evaluated as {result}");
-
-Additional samples can be found in the tests.
+More information on the expression nodes themselves can be found below. 
 
 ## Using with an IoC Container
 
@@ -134,6 +110,30 @@ Built in functions include:
 |min|MinNode|min(8,3*3)|
 |pow|PowNode|pow(2,4)|
 |sqrt|SqrtNode|sqrt(16)|
+
+## Compiling Linq Expressions
+
+_Note:_ Please be aware that compiling LINQ expressions was not my original goal for this library and so
+there are likely to be dragons here and considerable scope for improvement. I've validated things just enough
+to aid my unit testing (being able to compile and evaluate the expression is a nice external way
+of ensuring the syntax is as expected, as opposed to the tests self-validating my assumptions about associativity and precedence).
+
+All that said no doubt I will improve this over time.
+
+To build the tree into a LINQ expression, compile, and
+evaluate it first add the LINQ package from NuGet:
+
+    Install-Package AccidentalFish.ExpressionParser.Linq
+
+Now, continuing with our example, the following code will build and compile the expression and display the output:
+
+    Expression expression = LinqExpressionTreeBuilder.Build(rootNode);
+	Expression<Func<int>> lambda = Expression.Lambda<Func<int>>(expression);
+	Func<int> func = lambda.Compile();
+	int result = func();
+	Console.WriteLine($"The expression evaluated as {result}");
+
+Additional samples can be found in the tests.
 
 ## Parsing Approach
 
