@@ -120,8 +120,7 @@ of ensuring the syntax is as expected, as opposed to the tests self-validating m
 
 All that said no doubt I will improve this over time.
 
-To build the tree into a LINQ expression, compile, and
-evaluate it first add the LINQ package from NuGet:
+To build the tree into a LINQ expression, compile, and evaluate it first add the LINQ package from NuGet:
 
     Install-Package AccidentalFish.ExpressionParser.Linq
 
