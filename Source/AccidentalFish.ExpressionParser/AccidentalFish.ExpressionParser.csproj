@@ -5,15 +5,15 @@
     <AssemblyName>AccidentalFish.ExpressionParser</AssemblyName>
     <RootNamespace>AccidentalFish.ExpressionParser</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.8.1</Version>
+    <Version>0.8.2</Version>
     <PackageLicenseUrl>https://github.com/JamesRandall/AccidentalFish.ExpressionParser</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/JamesRandall/AccidentalFish.ExpressionParser</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JamesRandall/AccidentalFish.ExpressionParser</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <Copyright>Copyright © James Randall 2017</Copyright>
     <Description>Converts string based expressions (e.g. "5+3*9") into an abstract syntax tree.</Description>
-    <AssemblyVersion>0.8.1.0</AssemblyVersion>
-    <FileVersion>0.8.1.0</FileVersion>
+    <AssemblyVersion>0.8.2.0</AssemblyVersion>
+    <FileVersion>0.8.2.0</FileVersion>
   </PropertyGroup>
 
 </Project>

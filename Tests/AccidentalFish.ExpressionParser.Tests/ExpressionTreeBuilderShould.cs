@@ -99,6 +99,21 @@ namespace AccidentalFish.ExpressionParser.Tests
             Assert.Equal(3, secondParameter.Value);
             Assert.Equal(2, maxNode.Parameters.Count);
         }
+
+        [Fact]
+        public void StructureTreeWithConditionalOperatorAtRoot()
+        {
+            ExpressionSplitter expressionSplitter = new ExpressionSplitter(new ParserProvider());
+            RpnExpressionBuilder builder = new RpnExpressionBuilder();
+            RpnExpression rpnExpression = builder.Build(expressionSplitter.Split("@value<10 && @value>=5"));
+
+            ExpressionTreeBuilder testSubject = new ExpressionTreeBuilder();
+            ExpressionNode result = testSubject.Build(rpnExpression);
+
+            Assert.IsType<ConditionalAndNode>(result);
+            Assert.IsType<LessThanNode>(((ConditionalAndNode)result).Left);
+            Assert.IsType<GreaterThanEqualNode>(((ConditionalAndNode)result).Right);
+        }
     }
 }
 
