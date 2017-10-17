@@ -22,7 +22,8 @@ namespace AccidentalFish.ExpressionParser.Linq.Extensions
                 {typeof(LessThanNode), Expression.LessThan},
                 {typeof(MultiplicationNode), Expression.Multiply},
                 {typeof(NotEqualNode), Expression.NotEqual},
-                {typeof(SubtractionNode), Expression.Subtract}
+                {typeof(SubtractionNode), Expression.Subtract},
+                {typeof(ModuloNode), Expression.Modulo }
             };
 
         private static readonly Dictionary<Type, Func<Expression, Expression>> UnaryFactories = 

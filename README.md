@@ -75,6 +75,7 @@ All expression nodes ultimately deriver from the abstract ExpressionNode class b
 |Greater Than or Equal To|GreaterThanEqualNode|
 |Greater Than|GreaterThanNode|
 |Less Than or Equal To|LessThanEqualNode|
+|Modulous|ModuloNode|
 |Multiplication|MultiplicationNode|
 |Negation|NegateNode|
 |Not|NotNode|

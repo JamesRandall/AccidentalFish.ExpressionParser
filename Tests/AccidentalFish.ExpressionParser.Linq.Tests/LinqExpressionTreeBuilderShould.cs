@@ -128,7 +128,35 @@ namespace AccidentalFish.ExpressionParser.Linq.Tests
             Assert.Equal(2, result);
         }
 
-        
+        [Fact]
+        public void CreateDivisionAndModuloExpression()
+        {
+            ExpressionNode node = ExpressionFactory.Parse("10/2%4");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            Expression expression = testSubject.Build(node);
+
+            var lambda = Expression.Lambda<Func<int>>(expression);
+            var func = lambda.Compile();
+            var result = func();
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void CreateBracketedDivisionAndModuloExpression()
+        {
+            ExpressionNode node = ExpressionFactory.Parse("10/(2%4)");
+            ILinqExpressionTreeBuilder testSubject = new LinqExpressionTreeBuilder();
+            Expression expression = testSubject.Build(node);
+
+            var lambda = Expression.Lambda<Func<int>>(expression);
+            var func = lambda.Compile();
+            var result = func();
+
+            Assert.Equal(5, result);
+        }
+
+
         [Fact(Skip = "Moved to a function, functions not yet implemented")]
         public void MultiplicationAndPowerExpression()
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AccidentalFish.ExpressionParser.Nodes;
 using AccidentalFish.ExpressionParser.Parsers;
 
@@ -21,6 +22,10 @@ namespace AccidentalFish.ExpressionParser
 
         ExpressionNode IExpressionFactory.Parse(string expression)
         {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                throw new ArgumentNullException(nameof(expression), "The expression text contains nothing to parse");
+            }
             IReadOnlyCollection<ExpressionNode> components = _expressionSplitter.Split(expression);
             RpnExpression rpnExpression = _rpnExpressionBuilder.Build(components);
             ExpressionNode node = _expressionTreeBuilder.Build(rpnExpression);

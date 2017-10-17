@@ -42,6 +42,7 @@ namespace AccidentalFish.ExpressionParser.Parsers
                     token => new SubtractionNode()),
                 new SimpleLiteralParser(MultiplicationNode.Literal, token => new MultiplicationNode()),
                 new SimpleLiteralParser(DivisionNode.Literal, token => new DivisionNode()),
+                new SimpleLiteralParser(ModuloNode.Literal, token => new ModuloNode()),
                 new LookbackLiteralParser(
                     NegateNode.Literal,
                     previous => previous is OperatorNode,
