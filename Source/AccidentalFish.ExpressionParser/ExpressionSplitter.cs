@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AccidentalFish.ExpressionParser.Exception;
 using AccidentalFish.ExpressionParser.Nodes;
+using AccidentalFish.ExpressionParser.Nodes.Values;
 using AccidentalFish.ExpressionParser.Parsers;
 
 namespace AccidentalFish.ExpressionParser
@@ -44,7 +46,7 @@ namespace AccidentalFish.ExpressionParser
             string partialToken = "";
             while (remainingExpression.Length > 0)
             {
-                ExpressionNode newNode = null;
+                ExpressionNode newNode;
                 if (currentLength == 0)
                 {
                     partialToken = "";
@@ -58,32 +60,17 @@ namespace AccidentalFish.ExpressionParser
                     break;
                 }
 
-                IReadOnlyCollection<IParser> stillValidParsers = possibleParsers.Where(x => x.IsPartialMatch(partialToken, lastNode)).ToArray();
-
-                if (stillValidParsers.Count == 0)
+                if (partialToken.Length == 1 && partialToken == "\"")
                 {
-                    IReadOnlyCollection<IParser> remainingParsersAfterCompleteMatch = possibleParsers.Where(x => x.IsCompleteMatch(partialToken.Substring(0, partialToken.Length-1))).ToArray();
-                    if (remainingParsersAfterCompleteMatch.Count > 1)
-                    {
-                        throw new ExpressionParseException($"Syntax error. Expression component {remainingExpression} is ambiguous.");
-                    }
-                    newNode = remainingParsersAfterCompleteMatch.Single().Factory(partialToken.Substring(0, partialToken.Length - 1));
-                    remainingExpression = remainingExpression.Substring(currentLength-1);
+                    (remainingExpression, newNode) = ExtractString(remainingExpression);
                     currentLength = 0;
                 }
-                
-                possibleParsers = stillValidParsers;
-
-                // end of string
-                if (currentLength >= remainingExpression.Length)
+                else
                 {
-                    if (possibleParsers.Count > 1)
-                    {
-                        throw new ExpressionParseException($"Syntax error. Expression component {remainingExpression} is ambiguous.");
-                    }
-                    newNode = possibleParsers.Single().Factory(remainingExpression);
-                    remainingExpression = "";
+                    (possibleParsers, remainingExpression, currentLength, newNode) =
+                        AttemptParserExtract(possibleParsers, partialToken, lastNode, remainingExpression, currentLength);
                 }
+                
 
                 if (newNode != null)
                 {
@@ -96,11 +83,62 @@ namespace AccidentalFish.ExpressionParser
             return result;
         }
 
+        private static (IReadOnlyCollection<IParser>, string, int, ExpressionNode) AttemptParserExtract(IReadOnlyCollection<IParser> possibleParsers, string partialToken,
+            ExpressionNode lastNode, string remainingExpression, int currentLength)
+        {
+            IReadOnlyCollection<IParser> stillValidParsers = possibleParsers.Where(x => x.IsPartialMatch(partialToken, lastNode)).ToArray();
+            ExpressionNode newNode = null;
+            if (stillValidParsers.Count == 0)
+            {
+                IReadOnlyCollection<IParser> remainingParsersAfterCompleteMatch = possibleParsers.Where(x => x.IsCompleteMatch(partialToken.Substring(0, partialToken.Length - 1))).ToArray();
+                if (remainingParsersAfterCompleteMatch.Count > 1)
+                {
+                    throw new ExpressionParseException(
+                        $"Syntax error. Expression component {remainingExpression} is ambiguous.");
+                }
+                newNode = remainingParsersAfterCompleteMatch.Single().Factory(partialToken.Substring(0, partialToken.Length - 1));
+                remainingExpression = remainingExpression.Substring(currentLength - 1);
+                currentLength = 0;
+            }
+
+            possibleParsers = stillValidParsers;
+
+            // end of string
+            if (currentLength >= remainingExpression.Length)
+            {
+                if (possibleParsers.Count > 1)
+                {
+                    throw new ExpressionParseException($"Syntax error. Expression component {remainingExpression} is ambiguous.");
+                }
+                newNode = possibleParsers.Single().Factory(remainingExpression);
+                remainingExpression = "";
+            }
+            return (possibleParsers, remainingExpression, currentLength, newNode);
+        }
+
+        private (string, ExpressionNode) ExtractString(string remainingExpression)
+        {
+            remainingExpression = remainingExpression.Substring(1);
+            int nextQuoteIndex = 0;
+            do
+            {
+                nextQuoteIndex = remainingExpression.IndexOf("\"", nextQuoteIndex, StringComparison.Ordinal);
+                if (nextQuoteIndex == 0 || remainingExpression.Substring(nextQuoteIndex - 1, 1) != "\\")
+                {
+                    string value = remainingExpression.Substring(0, nextQuoteIndex);
+                    remainingExpression = remainingExpression.Substring(nextQuoteIndex + 1);
+                    return (remainingExpression, new StringValueNode(value));
+                }
+                nextQuoteIndex++;
+            } while (nextQuoteIndex != -1);
+            throw new ExpressionParseException("Malformed string in expression");
+        }
+
         private int ExtractNextNoneWhitespaceCharacter(string remainingExpression, int currentLength, ref string partialToken)
         {
             // we can't just do a global replace on whitespace characters to remove them as some operators / syntax
             // can change their meaning. For example string literals (not supported yet but will be).
-            string nextCharacter = "";
+            string nextCharacter;
             do
             {
                 nextCharacter = remainingExpression.Substring(currentLength, 1);

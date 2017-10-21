@@ -3,7 +3,6 @@
 Please note this project is work in progress. It is functional and the API is largely stable but you may trip over work in progress. In particular 
 the following are still under development:
 
-	String support
 	Linq builder
 
 ## Introduction
@@ -97,6 +96,12 @@ preceded by the @ symbol). The example below demonstrates both:
 Variables allow for the values to be retrieved at the time of evaluation or can be useful as placeholders when the expression tree is being used
 to translate into a different format.
 
+Strings should begin and end with the " character for example:
+
+    length("hello world")
+
+The escape sequence \" can be used to include the " character as part of a string.
+
 ### Functions
 
 Function nodes derive from the FunctionNode class and when expressed in an expression string take the typical form of:
@@ -111,6 +116,8 @@ Built in functions include:
 |min|MinNode|min(8,3*3)|
 |pow|PowNode|pow(2,4)|
 |sqrt|SqrtNode|sqrt(16)|
+|length|LengthNode|length("hello world")|
+
 
 ## Compiling Linq Expressions
 

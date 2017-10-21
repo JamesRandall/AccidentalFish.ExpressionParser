@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AccidentalFish.ExpressionParser.Nodes;
+using AccidentalFish.ExpressionParser.Nodes.Functions;
 using AccidentalFish.ExpressionParser.Nodes.Operators;
 using AccidentalFish.ExpressionParser.Nodes.Structural;
 using AccidentalFish.ExpressionParser.Nodes.Values;
@@ -163,7 +164,46 @@ namespace AccidentalFish.ExpressionParser.Tests
         public void SplitsSimpleFunction()
         {
             ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
-            ExpressionNode[] result = testSubject.Split("max(2,3)").ToArray();
+            ExpressionNode[] result = testSubject.Split("max(2,3.5)").ToArray();
+
+            Assert.IsType<MaxNode>(result[0]);
+            Assert.IsType<OpenBracketNode>(result[1]);
+            Assert.IsType<IntValueNode>(result[2]);
+            Assert.IsType<ParameterDelimiterNode>(result[3]);
+            Assert.IsType<DoubleValueNode>(result[4]);
+            Assert.IsType<CloseBracketNode>(result[5]);
+        }
+
+        [Fact]
+        public void SplitStrings()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("\"hello\"+\"world\"").ToArray();
+
+            Assert.Equal("hello", ((StringValueNode)result[0]).Value);
+            Assert.IsType<AdditionNode>(result[1]);
+            Assert.Equal("world", ((StringValueNode)result[2]).Value);
+        }
+
+        [Fact]
+        public void SplitsStringWithEscapeCharacter()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("\"hello \\\"car\\\"\"").ToArray();
+
+            Assert.Equal("hello \\\"car\\\"", ((StringValueNode)result[0]).Value);
+        }
+
+        [Fact]
+        public void StringAsFunctionParameter()
+        {
+            ExpressionSplitter testSubject = new ExpressionSplitter(new ParserProvider());
+            ExpressionNode[] result = testSubject.Split("length(\"hello\")").ToArray();
+
+            Assert.IsType<LengthNode>(result[0]);
+            Assert.IsType<OpenBracketNode>(result[1]);
+            Assert.Equal("hello", ((StringValueNode)result[2]).Value);
+            Assert.IsType<CloseBracketNode>(result[3]);
         }
     }
 }

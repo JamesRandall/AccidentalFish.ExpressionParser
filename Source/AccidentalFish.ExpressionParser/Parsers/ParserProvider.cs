@@ -24,6 +24,7 @@ namespace AccidentalFish.ExpressionParser.Parsers
                 new SimpleLiteralParser(MinNode.Literal, token => new MinNode()),
                 new SimpleLiteralParser(PowNode.Literal, token => new PowNode()),
                 new SimpleLiteralParser(SqrtNode.Literal, token => new SqrtNode()),
+                new SimpleLiteralParser(LengthNode.Literal, token => new LengthNode()),
                 // Operators
                 new SimpleLiteralParser(ConditionalAndNode.Literal, token => new ConditionalAndNode()),
                 new SimpleLiteralParser(EqualNode.Literal, token => new EqualNode()),
