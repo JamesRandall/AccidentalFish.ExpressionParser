@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using AccidentalFish.ExpressionParser.Nodes;
 
 namespace AccidentalFish.ExpressionParser.Parsers
 {
-    internal class LookbackLiteralParser : IParser
+    public class LookbackLiteralParser : IParser
     {
         private readonly string _literal;
         private readonly Func<ExpressionNode, bool> _isValidLookback;

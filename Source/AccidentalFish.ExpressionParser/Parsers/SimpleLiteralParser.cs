@@ -3,7 +3,7 @@ using AccidentalFish.ExpressionParser.Nodes;
 
 namespace AccidentalFish.ExpressionParser.Parsers
 {
-    internal class SimpleLiteralParser : IParser
+    public class SimpleLiteralParser : IParser
     {
         private readonly string _literal;
 

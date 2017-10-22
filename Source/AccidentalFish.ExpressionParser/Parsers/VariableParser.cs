@@ -4,7 +4,7 @@ using AccidentalFish.ExpressionParser.Nodes;
 
 namespace AccidentalFish.ExpressionParser.Parsers
 {
-    internal class VariableParser : IParser
+    public class VariableParser : IParser
     {
         private readonly Func<string, ExpressionNode> _factory;
         private readonly Regex _test = new Regex(@"\@{1}[a-z]{0,}[a-z]$");
